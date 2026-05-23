@@ -1,0 +1,26 @@
+from unittest.mock import patch, MagicMock
+from modelo import BaseDeDatos
+
+@patch('modelo.create_client')
+def test_hu02_crear_solicitud_happy_path(mock_create_client):
+    mock_supabase = MagicMock()
+    mock_create_client.return_value = mock_supabase
+    mock_supabase.table().select().eq().execute().data = [{"dni": "12345678", "nombre": "Juan Perez"}]
+
+    db = BaseDeDatos()
+    exito, mensaje = db.crear_solicitud("12345678", 5000, 12)
+
+    assert exito is True
+    assert mensaje == "Solicitud guardada en Supabase correctamente."
+
+@patch('modelo.create_client')
+def test_hu02_crear_solicitud_unhappy_path(mock_create_client):
+    mock_supabase = MagicMock()
+    mock_create_client.return_value = mock_supabase
+    mock_supabase.table().select().eq().execute().data = []
+
+    db = BaseDeDatos()
+    exito, mensaje = db.crear_solicitud("99999999", 5000, 12)
+
+    assert exito is False
+    assert mensaje == "Cliente no encontrado. Regístrelo primero."
