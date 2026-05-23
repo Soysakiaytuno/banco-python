@@ -1,4 +1,3 @@
-import os
 from supabase import create_client, Client
 
 SUPABASE_URL = "https://ujykhkyfdguebnniujyd.supabase.co"
