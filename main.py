@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 # Importamos nuestros propios módulos
-from .modelo import BaseDeDatos
-from .vistas import TabComercial, TabRiesgos, TabOperaciones, TabConsultas
+from modelo import BaseDeDatos
+from vistas import TabComercial, TabRiesgos, TabOperaciones, TabConsultas
 
 class AppControlador:
     def __init__(self, root):
