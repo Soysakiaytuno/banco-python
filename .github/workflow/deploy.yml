@@ -1,0 +1,28 @@
+name: Deploy Banco
+
+on: 
+  push:
+    branches: ["main", "desarrollo"]
+  pull_request: 
+    branches: ["main", desarrollo]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Banco-Prestamo
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalacion
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Dependencias
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
