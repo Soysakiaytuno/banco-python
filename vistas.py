@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+# prueba par CI CD 
 class TabComercial(ttk.Frame):
     """ Módulo para Ejecutivos Comerciales (HU-01 y HU-02) """
     def __init__(self, parent, controlador):
