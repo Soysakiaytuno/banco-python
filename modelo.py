@@ -44,7 +44,8 @@ class BaseDeDatos:
             # 1. Verificamos que el cliente exista
             if not self.validar_cliente(dni)[0]:
                 return False, "Cliente no encontrado. Regístrelo primero."
-            
+            if not self.validar_monto(monto)[0]:
+                return False, "Monto inválido. El monto debe ser mayor a 0"
             # 2. Insertamos la solicitud (el ID y la fecha se generan solos en Supabase)
             self.supabase.table('solicitudes').insert({
                 "dni_cliente": dni,
