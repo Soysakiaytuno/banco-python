@@ -39,6 +39,14 @@ class BaseDeDatos:
         except Exception as e:
             return False, f"Error de conexión: {str(e)}"
     
+    def validar_plazo(self, plazo):
+        try:
+            if plazo <= 0:
+                return False, "El plazo debe ser mayor a 0"
+            return True, "El plazo es válido"
+        except Exception as e:
+            return False, f"Error de conexión: {str(e)}"
+
     def crear_solicitud(self, dni, monto, plazo):
         try:
             # 1. Verificamos que el cliente exista
