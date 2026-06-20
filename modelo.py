@@ -4,6 +4,9 @@ SUPABASE_URL = "https://ujykhkyfdguebnniujyd.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVqeWtoa3lmZGd1ZWJubml1anlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2MzUwMzUsImV4cCI6MjA4NzIxMTAzNX0.c6PGflPhGW6xDDtRIKQhlQ9B_so7nu3XEg-awbww9Fo"
 
 class BaseDeDatos:
+    ESTADO_PENDIENTE = "Pendiente"
+    ESTADO_APROBADO = "Aprobado"
+    ESTADO_DESEMBOLSADO = "Desembolsado"
     def __init__(self):
         # Inicializamos la conexión a Supabase
         self.supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
@@ -61,7 +64,7 @@ class BaseDeDatos:
                 "dni_cliente": dni,
                 "monto": monto,
                 "plazo": plazo,
-                "estado": "Pendiente"
+                "estado": self.ESTADO_PENDIENTE
             }).execute()
             return True, "Solicitud guardada en Supabase correctamente."
         except Exception as e:
@@ -81,13 +84,13 @@ class BaseDeDatos:
             # 1. Obtener los detalles de la solicitud
             sol = self.supabase.table('solicitudes').select('*').eq('id', id_solicitud).execute()
             
-            if len(sol.data) == 0 or sol.data[0]['estado'] != 'Aprobado':
+            if len(sol.data) == 0 or sol.data[0]['estado'] != self.ESTADO_APROBADO:
                 return False, "Solicitud no válida o no ha sido aprobada."
             
             solicitud = sol.data[0]
 
             # 2. Actualizar estado de la solicitud a 'Desembolsado'
-            self.supabase.table('solicitudes').update({"estado": "Desembolsado"}).eq('id', id_solicitud).execute()
+            self.supabase.table('solicitudes').update({"estado": self.ESTADO_DESEMBOLSADO}).eq('id', id_solicitud).execute()
 
             # 3. Crear el préstamo (la deuda activa del cliente)
             self.supabase.table('prestamos').insert({
