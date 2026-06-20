@@ -7,6 +7,7 @@ class BaseDeDatos:
     def __init__(self):
         # Inicializamos la conexión a Supabase
         self.supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    
     def validar_cliente(self, dni):
         try:
             respuesta = self.supabase.table('clientes').select('*').eq('dni', dni).execute()
@@ -16,6 +17,7 @@ class BaseDeDatos:
                 return False, "El DNI no se encuentra registrado."
         except Exception as e:
             return False, f"Error de conexión: {str(e)}"
+    
     def registrar_cliente(self, dni, nombre):
         try:
             # 1. Verificamos si el DNI ya existe
