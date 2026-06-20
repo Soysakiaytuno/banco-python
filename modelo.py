@@ -34,8 +34,7 @@ class BaseDeDatos:
     def crear_solicitud(self, dni, monto, plazo):
         try:
             # 1. Verificamos que el cliente exista
-            cliente = self.supabase.table('clientes').select('*').eq('dni', dni).execute()
-            if len(cliente.data) == 0:
+            if not self.validar_cliente(dni)[0]:
                 return False, "Cliente no encontrado. Regístrelo primero."
             
             # 2. Insertamos la solicitud (el ID y la fecha se generan solos en Supabase)
