@@ -31,6 +31,14 @@ class BaseDeDatos:
         except Exception as e:
             return False, f"Error de conexión: {str(e)}"
 
+    def validar_monto(self, monto):
+        try:
+            if monto <= 0:
+                return False, "El monto debe ser mayor a 0"
+            return True, "El monto es válido"
+        except Exception as e:
+            return False, f"Error de conexión: {str(e)}"
+    
     def crear_solicitud(self, dni, monto, plazo):
         try:
             # 1. Verificamos que el cliente exista
