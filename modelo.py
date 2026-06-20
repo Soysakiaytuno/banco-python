@@ -24,10 +24,8 @@ class BaseDeDatos:
     def registrar_cliente(self, dni, nombre):
         try:
             # 1. Verificamos si el DNI ya existe
-            respuesta = self.supabase.table('clientes').select('*').eq('dni', dni).execute()
-            if len(respuesta.data) > 0:
+            if self.validar_cliente(dni)[0]:
                 return False, "El cliente ya existe en la base de datos."
-            
             # 2. Insertamos el nuevo cliente
             self.supabase.table('clientes').insert({"dni": dni, "nombre": nombre}).execute()
             return True, "Cliente registrado exitosamente en la nube."
