@@ -33,20 +33,14 @@ class BaseDeDatos:
             return False, f"Error de conexión: {str(e)}"
 
     def validar_monto(self, monto):
-        try:
-            if monto <= 0:
-                return False, "El monto debe ser mayor a 0"
-            return True, "El monto es válido"
-        except Exception as e:
-            return False, f"Error de conexión: {str(e)}"
+        if monto <= 0:
+            return False, "El monto debe ser mayor a 0"
+        return True, "El monto es válido"
     
     def validar_plazo(self, plazo):
-        try:
-            if plazo <= 0:
-                return False, "El plazo debe ser mayor a 0"
-            return True, "El plazo es válido"
-        except Exception as e:
-            return False, f"Error de conexión: {str(e)}"
+        if plazo <= 0:
+            return False, "El plazo debe ser mayor a 0"
+        return True, "El plazo es válido"
 
     def crear_solicitud(self, dni, monto, plazo):
         try:
